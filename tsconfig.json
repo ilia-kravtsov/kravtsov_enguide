@@ -1,0 +1,21 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ],
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "react-jsx",
+    "types": ["vite/client", "vite-plugin-pwa/client"]
+  },
+  "include": ["src"]
+}
