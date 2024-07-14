@@ -15,7 +15,7 @@
     "moduleResolution": "node",
     "strict": true,
     "jsx": "react-jsx",
-    "types": ["vite/client", "vite-plugin-pwa/client"]
+    "types": ["vite/client"]
   },
-  "include": ["src"]
+  "include": ["src", "./vite-env.d.ts", "./firebase-config.ts"]
 }

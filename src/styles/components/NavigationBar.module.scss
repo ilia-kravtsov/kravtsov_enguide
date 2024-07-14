@@ -1,0 +1,36 @@
+@import '../variables.module';
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.link {
+  position: relative;
+  color: var(--font-color-1);
+  text-decoration: none;
+  transition: color .3s ease, transform .2s ease;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0); /* Initially set the underline width to 0 */
+  height: 2px; /* Set the height of the underline */
+  bottom: -3px;
+  left: 0;
+  background-color: var(--font-color-1); /* Set the color of the underline to match the link color */
+  transition: transform 0.3s ease; /* Apply a smooth transition to the transform property */
+}
+
+/* When hovering over the links, expand the underline and change the link color */
+.link:hover::after {
+  transform: scaleX(1); /* Expand the underline to full width on hover */
+}
+
+.link:active {
+  transform: scale(0.97);
+}

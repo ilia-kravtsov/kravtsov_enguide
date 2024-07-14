@@ -1,0 +1,36 @@
+@import '../variables.module';
+@import '../reset.module';
+@import '../fonts.module';
+
+.fontPattern {
+  font-family: var(--font-family-1), serif;
+  font-weight: var(--font-weight-2);
+  font-size: var(--font-size-1);
+  letter-spacing: var(--letter-spacing-1);
+  color: var(--bg-color-1);
+}
+
+.container {
+  width: 70%;
+  display: flex;
+  gap: 20px;
+}
+.input {
+  @extend .fontPattern;
+  width: 50%;
+  padding: 20px;
+}
+.saveButton {
+  @extend .fontPattern;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  transition: transform .2s, background-color .2s ease;
+  background-color: var(--font-color-1);
+}
+.saveButton:hover {
+  background-color: var(--color-3);
+}
+.saveButton:active {
+  transform: scale(0.97);
+}

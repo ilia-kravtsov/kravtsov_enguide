@@ -1,6 +1,6 @@
-@import './reset.module';
-@import './variables.module';
-@import '../styles/fonts.module';
+@import '../reset.module';
+@import '../variables.module';
+@import '../fonts.module';
 
 .container {
   background: var(--bg-color-1);
@@ -13,6 +13,14 @@
   font-family: var(--font-family-1), sans-serif;
   font-size: var(--font-size-1);
   font-weight: var(--font-weight-1);
+}
+
+.display {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .line {

@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom/client'
 import App from './components/App.tsx'
 import { registerSW } from 'virtual:pwa-register';
+import {BrowserRouter} from "react-router-dom";
 
 // Register the service worker
 const updateSW = registerSW({
@@ -17,4 +18,7 @@ const updateSW = registerSW({
     },
 });
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(<App />)
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>)

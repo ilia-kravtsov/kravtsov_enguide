@@ -1,6 +1,8 @@
+@import './variables.module';
+
 *, *::before, *::after {box-sizing: border-box;padding: 0;margin: 0;border: 0;}
 :focus {outline: none;}
-:focus-visible {outline: 2px solid blue; /* for keyboard users */}
+:focus-visible {outline: 2px solid var(--color-1); /* for keyboard users */}
 a:focus, a:active {outline: none;}
 a {text-decoration: none;}
 html, body {height: 100%;width: 100%;}
