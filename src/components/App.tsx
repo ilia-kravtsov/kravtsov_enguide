@@ -1,6 +1,6 @@
 import s from '../styles/components/App.module.scss';
 import {Route, Routes} from "react-router-dom";
-import {Hero} from "./Hero.tsx";
+import {Home} from "./Home.tsx";
 import {Dictionary} from "./Dictionary.tsx";
 import {Header} from "./Header.tsx";
 
@@ -13,7 +13,7 @@ function App() {
 
           <div className={s.display}>
               <Routes>
-                  <Route path='/' element={<Hero />}/>
+                  <Route path='/' element={<Home />}/>
                   <Route path='/dictionary' element={<Dictionary />}/>
               </Routes>
           </div>

@@ -1,9 +1,9 @@
 type Props = {}
 
-export const Hero = ({}: Props) => {
+export const Home = ({}: Props) => {
     return (
         <div>
-            Hero
+            Home
         </div>
     );
 };
