@@ -1,3 +1,7 @@
+@import '../variables.module';
+@import '../reset.module';
+@import '../fonts.module';
+
 .container {
   width: 100%;
   display: flex;
@@ -5,7 +9,9 @@
   align-items: center;
   gap: 20px;
 }
-
+.loadingWords {
+  color: var(--font-color-1);
+}
 .wordContainer {
   display: flex;
   flex-direction: column;
@@ -20,9 +26,10 @@
   background-color: var(--bg-color-1);
   position: absolute;
   top: 30px;
-  right: -70%;
+  right: -50%;
   opacity: 0;
   transition: opacity 0.5s ease-in-out, right 0.4s ease-in-out;
+  z-index: 2;
 }
 .word {
   cursor: pointer;
@@ -31,3 +38,19 @@
   right: 0;
   opacity: 1;
 }
+.wordComment:hover {
+  right: 0;
+  opacity: 1;
+}
+.textareaCommentEdit {
+  position: absolute;
+  @extend .fontPattern;
+  width: 100%;
+  resize: none;
+  border: none;
+  padding: 10px;
+}
+.buttonCommentEdit {
+  position: absolute;
+}
+

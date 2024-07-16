@@ -15,3 +15,11 @@
   --color-3: #e0e0e0;
   --color-4: #a5543a;
 }
+
+.fontPattern {
+  font-family: var(--font-family-1), serif;
+  font-weight: var(--font-weight-2);
+  font-size: var(--font-size-1);
+  letter-spacing: var(--letter-spacing-1);
+  color: var(--bg-color-1);
+}
