@@ -87,64 +87,40 @@ export const InputData = ({setDataLoadFlag}: Props) => {
                    placeholder={'translation'}/>
             <textarea className={s.textarea} onChange={CommentEntering} placeholder={'usage example'} rows={5}
                       value={data.comment}/>
-            <h4>Specify the complexity of the word :</h4>
-            <div className={s.complexityContainer}>
-                <label className={s.complexityLabel}>
-                    <input
-                        type="radio"
-                        value="A1"
-                        name="complexity"
-                        checked={data.complexity === 'A1'}
-                        onChange={handleCategoryChange}
-                    />
-                    A1
+            <fieldset className={s.complexityContainer}>
+                <legend>Specify the complexity of the word :</legend>
+                {complexityLevels.map((level) => (
+                    <label key={level} className={s.complexityLabel}>
+                        <input
+                            type="radio"
+                            value={level}
+                            name="complexity"
+                            checked={data.complexity === level}
+                            onChange={handleCategoryChange}
+                        />
+                        {level}
+                    </label>
+                ))}
+            </fieldset>
+            <fieldset className={s.complexityContainer}>
+                <legend>Word formation:</legend>
+                <label htmlFor="noun" className={s.complexityLabel}>
+                    <input type="radio" id="noun" name="word_formation" value="noun" defaultChecked={true}/>
+                    Noun
                 </label>
-                <label className={s.complexityLabel}>
-                    <input
-                        type="radio"
-                        value="A2"
-                        name="complexity"
-                        onChange={handleCategoryChange}
-                    />
-                    A2
+                <label htmlFor="verb" className={s.complexityLabel}>
+                    <input type="radio" id="verb" name="word_formation" value="verb"/>
+                    Verb
                 </label>
-                <label className={s.complexityLabel}>
-                    <input
-                        type="radio"
-                        value="B1"
-                        name="complexity"
-                        onChange={handleCategoryChange}
-                    />
-                    B1
+                <label htmlFor="adjective" className={s.complexityLabel}>
+                    <input type="radio" id="adjective" name="word_formation" value="adjective"/>
+                    Adjective
                 </label>
-                <label className={s.complexityLabel}>
-                    <input
-                        type="radio"
-                        value="B2"
-                        name="complexity"
-                        onChange={handleCategoryChange}
-                    />
-                    B2
+                <label htmlFor="adverb" className={s.complexityLabel}>
+                    <input type="radio" id="adverb" name="word_formation" value="adverb"/>
+                    Adverb
                 </label>
-                <label className={s.complexityLabel}>
-                    <input
-                        type="radio"
-                        value="C1"
-                        name="complexity"
-                        onChange={handleCategoryChange}
-                    />
-                    C1
-                </label>
-                <label className={s.complexityLabel}>
-                    <input
-                        type="radio"
-                        value="C2"
-                        name="complexity"
-                        onChange={handleCategoryChange}
-                    />
-                    C2
-                </label>
-            </div>
+            </fieldset>
             <button className={s.saveButton} onClick={onDateSaveClick} type={'button'}>Save</button>
         </form>
     );
