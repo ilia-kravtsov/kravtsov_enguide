@@ -4,8 +4,9 @@ import {getDatabase, ref, set, push} from "firebase/database";
 // @ts-ignore
 import { app } from "../../firebase-config.ts";
 import {v4} from 'uuid';
+import {SaveButton} from "./SaveButton.tsx";
 
-type ComplexityLevels = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
+export type ComplexityLevels = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
 
 type Data = {
     id: string, word: string, transcription: string, translation: string, comment?: string, complexity: ComplexityLevels
@@ -121,7 +122,7 @@ export const InputData = ({setDataLoadFlag}: Props) => {
                     Adverb
                 </label>
             </fieldset>
-            <button className={s.saveButton} onClick={onDateSaveClick} type={'button'}>Save</button>
+            <SaveButton onDateSaveClick={onDateSaveClick}/>
         </form>
     );
 };

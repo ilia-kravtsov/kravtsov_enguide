@@ -1,0 +1,19 @@
+@import '../variables.module';
+@import '../reset.module';
+@import '../fonts.module';
+
+.saveButton {
+  width: 100%;
+  @extend .fontPattern;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  transition: transform .2s, background-color .2s ease;
+  background-color: var(--font-color-1);
+}
+.saveButton:hover {
+  background-color: var(--color-3);
+}
+.saveButton:active {
+  transform: scale(0.99);
+}

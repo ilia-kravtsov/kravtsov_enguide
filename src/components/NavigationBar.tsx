@@ -8,6 +8,8 @@ export const NavigationBar = ({}: Props) => {
         <div className={s.container}>
             <NavLink to={'/'} className={s.link}>Home</NavLink>
             <NavLink to={'/dictionary'} className={s.link}>Dictionary</NavLink>
+            <NavLink to={'/expressions'} className={s.link}>Expressions</NavLink>
+            <NavLink to={'/cards'} className={s.link}>Cards</NavLink>
         </div>
     );
 };

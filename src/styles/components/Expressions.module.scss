@@ -1,35 +1,29 @@
 @import '../variables.module';
 @import '../reset.module';
 @import '../fonts.module';
+@import './Input.module';
 
 .container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.form {
   width: 70%;
   display: flex;
   flex-direction: column;
+  align-items: start;
   gap: 20px;
+  padding: 0 20px;
 }
-.inputsContainer {
-  display: flex;
-  gap: 20px;
-}
-.input {
+.expressionEnter {
   @extend .fontPattern;
   width: 100%;
-  padding: 20px;
-}
-.textarea {
-  @extend .fontPattern;
-  outline: none;
-  border: none;
-  padding: 20px;
-  resize: none;
+  padding: 10px;
 }
 .complexityContainer {
   display: flex;
   gap: 10px;
 }
-.complexityLabel {
-  display: flex;
-  gap: 10px;
-  cursor: pointer;
-}
+
