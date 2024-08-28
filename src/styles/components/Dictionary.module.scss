@@ -15,42 +15,16 @@
 .wordContainer {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   gap: 10px;
   position: relative;
+  margin: 5px 0;
 }
 .wordMainInfo {
   display: flex;
   gap: 10px;
 }
-.wordComment {
-  background-color: var(--bg-color-1);
-  position: absolute;
-  top: 30px;
-  right: -50%;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out, right 0.4s ease-in-out;
-  z-index: 2;
-}
-.word {
-  cursor: pointer;
-}
-.word:hover ~ .wordComment {
-  right: 0;
-  opacity: 1;
-}
-.wordComment:hover {
-  right: 0;
-  opacity: 1;
-}
-.textareaCommentEdit {
-  position: absolute;
-  @extend .fontPattern;
-  width: 100%;
-  resize: none;
-  border: none;
-  padding: 10px;
-}
-.buttonCommentEdit {
-  position: absolute;
-}
+
+
+
 

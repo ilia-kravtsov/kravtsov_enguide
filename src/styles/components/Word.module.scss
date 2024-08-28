@@ -1,0 +1,74 @@
+@import '../variables.module';
+@import '../reset.module';
+@import '../fonts.module';
+
+.wordMainInfo {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  position: relative;
+}
+.wordComment {
+  background-color: var(--bg-color-1);
+  position: absolute;
+  top: 30px;
+  right: -50%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out, right 0.4s ease-in-out;
+  z-index: 2;
+}
+.word {
+  cursor: pointer;
+}
+.word:hover ~ .wordComment {
+  right: 0;
+  opacity: 1;
+}
+.wordComment:hover {
+  right: 0;
+  opacity: 1;
+}
+.textareaCommentEdit {
+  position: absolute;
+  @extend .fontPattern;
+  width: 100%;
+  resize: none;
+  border: none;
+  padding: 10px;
+}
+.buttonCommentEdit {
+  position: absolute;
+}
+.updateButton {
+  padding: 8px;
+  @extend .fontPattern;
+  font-size: 16px;
+  background: transparent;
+  border: var(--border-color);
+  color: var(--font-color-1);
+  transition: transform .1s;
+}
+.updateButton:hover {
+  background: var(--bg-color-2);
+}
+.updateButton:active {
+  transform: scale(0.97);
+}
+.pos {
+  position: absolute;
+  left: -130px;
+  background-color: var(--color-1);
+  color: var(--font-color-1);
+  font-size: 14px;
+  padding: 5px;
+}
+.complexity {
+  position: absolute;
+  left: -180px;
+  background-color: var(--color-1);
+  color: var(--font-color-1);
+  font-size: 14px;
+  padding: 5px;
+}

@@ -7,20 +7,28 @@ import {v4} from 'uuid';
 import {SaveButton} from "./SaveButton.tsx";
 
 export type ComplexityLevels = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
-
-type Data = {
-    id: string, word: string, transcription: string, translation: string, comment?: string, complexity: ComplexityLevels
-}
+export type PartsOfSpeech = 'Noun' | 'Verb' | 'Adjective' | 'Adverb' | 'Pronoun' | 'Preposition' | 'Conjunction' | 'Interjection';
+export type WordData = {
+    id: string
+    word: string
+    transcription: string
+    translation: string
+    usageExample?: string
+    complexity: ComplexityLevels
+    pos: PartsOfSpeech
+};
 
 type Props = {
     setDataLoadFlag: (dataLoadFlag: boolean) => void
 }
 
+export const partsOfSpeech: PartsOfSpeech[] = ['Noun', 'Verb', 'Adjective', 'Adverb', 'Pronoun', 'Preposition', 'Conjunction', 'Interjection'];
+
 export const InputData = ({setDataLoadFlag}: Props) => {
 
     const complexityLevels: ComplexityLevels[]  =  ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
-    let [data, setData] = useState<Data>({id: '', word: '', transcription: '', translation: '', comment: '', complexity: 'A1'})
+    let [data, setData] = useState<WordData>({id: '', word: '', transcription: '', translation: '', usageExample: '', complexity: 'A1', pos: 'Noun'})
 
     const WordEntering = (e: ChangeEvent<HTMLInputElement>) => {
         setData({...data, word: e.currentTarget.value})
@@ -32,9 +40,8 @@ export const InputData = ({setDataLoadFlag}: Props) => {
         setData({...data, translation: e.currentTarget.value})
     }
     const CommentEntering = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        setData({...data, comment: e.currentTarget.value})
+        setData({...data, usageExample: e.currentTarget.value})
     }
-
     const handleCategoryChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value
         if (complexityLevels.some(level => level === value)) {
@@ -52,8 +59,9 @@ export const InputData = ({setDataLoadFlag}: Props) => {
             const word = data.word;
             const transcription = data.transcription;
             const translation = data.translation;
-            const comment = data.comment;
+            const usageExample = data.usageExample;
             const complexity = data.complexity
+            const pos = data.pos
 
             // отправляю данные
             set(newWordReference, {
@@ -61,15 +69,16 @@ export const InputData = ({setDataLoadFlag}: Props) => {
                 word,
                 transcription,
                 translation,
-                comment,
-                complexity
+                usageExample,
+                complexity,
+                pos
             }).then(() => {
                 alert('a new word saved successfully');
                 setDataLoadFlag(true)
             }).catch((error) => {
                 alert(`error: ${error}`);
             }).finally(() => {
-                setData({id, word: '', transcription: '', translation: '', comment: '', complexity: 'A1'})
+                setData({id, word: '', transcription: '', translation: '', usageExample: '', complexity: 'A1', pos: 'Noun'})
             })
         } else {
             alert('fill in all the fields');
@@ -87,7 +96,7 @@ export const InputData = ({setDataLoadFlag}: Props) => {
             <input className={s.input} onChange={TranslationEntering} value={data.translation} maxLength={500}
                    placeholder={'translation'}/>
             <textarea className={s.textarea} onChange={CommentEntering} placeholder={'usage example'} rows={5}
-                      value={data.comment}/>
+                      value={data.usageExample}/>
             <fieldset className={s.complexityContainer}>
                 <legend>Specify the complexity of the word :</legend>
                 {complexityLevels.map((level) => (
@@ -104,23 +113,15 @@ export const InputData = ({setDataLoadFlag}: Props) => {
                 ))}
             </fieldset>
             <fieldset className={s.complexityContainer}>
-                <legend>Word formation:</legend>
-                <label htmlFor="noun" className={s.complexityLabel}>
-                    <input type="radio" id="noun" name="word_formation" value="noun" defaultChecked={true}/>
-                    Noun
-                </label>
-                <label htmlFor="verb" className={s.complexityLabel}>
-                    <input type="radio" id="verb" name="word_formation" value="verb"/>
-                    Verb
-                </label>
-                <label htmlFor="adjective" className={s.complexityLabel}>
-                    <input type="radio" id="adjective" name="word_formation" value="adjective"/>
-                    Adjective
-                </label>
-                <label htmlFor="adverb" className={s.complexityLabel}>
-                    <input type="radio" id="adverb" name="word_formation" value="adverb"/>
-                    Adverb
-                </label>
+                <legend>Parts of speech:</legend>
+                {
+                    partsOfSpeech.map((pos, i) => {
+                        return <label htmlFor={pos} className={s.complexityLabel} key={pos}>
+                            <input type="radio" id={pos} name="parts_of_speech" value={pos} defaultChecked={i === 0}/>
+                            {pos}
+                        </label>
+                    })
+                }
             </fieldset>
             <SaveButton onDateSaveClick={onDateSaveClick}/>
         </form>
