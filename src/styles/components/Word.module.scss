@@ -3,6 +3,11 @@
 @import '../fonts.module';
 
 .wordMainInfo {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.wordInfoContainer {
   width: 100%;
   display: flex;
   justify-content: flex-start;
@@ -10,25 +15,14 @@
   gap: 10px;
   position: relative;
 }
-.wordComment {
-  background-color: var(--bg-color-1);
-  position: absolute;
-  top: 30px;
-  right: -50%;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out, right 0.4s ease-in-out;
-  z-index: 2;
+.wordAccordionContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  animation: smoothAppear 1s ease-out;
 }
 .word {
   cursor: pointer;
-}
-.word:hover ~ .wordComment {
-  right: 0;
-  opacity: 1;
-}
-.wordComment:hover {
-  right: 0;
-  opacity: 1;
 }
 .textareaCommentEdit {
   position: absolute;
@@ -58,17 +52,31 @@
 }
 .pos {
   position: absolute;
-  left: -130px;
+  left: -115px;
   background-color: var(--color-1);
   color: var(--font-color-1);
   font-size: 14px;
   padding: 5px;
+  width: 100px;
+  border-radius: 2px;
 }
 .complexity {
   position: absolute;
-  left: -180px;
+  left: -175px;
+  width: 50px;
   background-color: var(--color-1);
   color: var(--font-color-1);
   font-size: 14px;
   padding: 5px;
+  border-radius: 2px;
+}
+@keyframes smoothAppear {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+  100% {
+    height: 100%;
+    opacity: 1;
+  }
 }

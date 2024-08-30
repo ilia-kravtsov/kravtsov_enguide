@@ -12,9 +12,8 @@
 .loadingWords {
   color: var(--font-color-1);
 }
-.wordContainer {
+.wordContainer { // delete
   display: flex;
-  flex-direction: column;
   justify-content: flex-start;
   gap: 10px;
   position: relative;

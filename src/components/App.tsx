@@ -8,18 +8,20 @@ import {Expressions} from "./Expressions.tsx";
 function App() {
 
     return (
-      <div className={s.container}>
-          <Header/>
 
-          <div className={s.display}>
-              <Routes>
-                  <Route path='/' element={<Home />}/>
-                  <Route path='/dictionary' element={<Dictionary />}/>
-                  <Route path='/expressions' element={<Expressions />}/>
-              </Routes>
-          </div>
+        <div className={s.container}>
 
-      </div>
+            <Header/>
+
+            <div className={s.display}>
+                <Routes>
+                    <Route path='/' element={<Home/>}/>
+                    <Route path='/dictionary' element={<Dictionary/>}/>
+                    <Route path='/expressions' element={<Expressions/>}/>
+                </Routes>
+            </div>
+
+        </div>
     )
 }
 
