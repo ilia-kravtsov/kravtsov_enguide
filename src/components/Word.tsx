@@ -15,13 +15,14 @@ export const Word = ({wordId, wordData, onUpdateWordClick, deleteWordCB}: Props)
 
     const updateWordClick = () => onUpdateWordClick(wordId)
     const deleteWord = () => deleteWordCB(wordId)
-    const wordAccordionOpener = () => setWordAccordOpenFlag(!wordAccordOpenFlag)
+    const wordAccordOpener = () => setWordAccordOpenFlag(!wordAccordOpenFlag)
+
     return (
         <div className={s.wordMainInfo}>
             <div className={s.wordInfoContainer}>
                 <div className={s.complexity}>{wordData.complexity}</div>
                 <div className={s.pos}>{wordData.pos}</div>
-                <div className={s.word} onClick={wordAccordionOpener}>{wordData.word}</div>
+                <div className={s.word} onClick={wordAccordOpener}>{wordData.word}</div>
                 -
                 <div>{wordData.transcription}</div> -
                 <div>{wordData.translation.toLowerCase()}</div>
@@ -34,10 +35,10 @@ export const Word = ({wordId, wordData, onUpdateWordClick, deleteWordCB}: Props)
                     Delete
                 </button>
             </div>
-            {wordAccordOpenFlag && <div className={wordAccordOpenFlag ? `${s.wordAccordionContainer} ${s.open}` : s.wordAccordionContainer}>
-                <div>{wordData.example}</div>
-                <div>{wordData.synonyms}</div>
-                <div>{wordData.comment}</div>
+            {wordAccordOpenFlag && <div className={s.wordAccordionContainer}>
+                <div>example: {wordData.example}</div>
+                <div>synonyms: {wordData.synonyms}</div>
+                <div>comment: {wordData.comment}</div>
             </div>}
         </div>
     );

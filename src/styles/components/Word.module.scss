@@ -16,10 +16,17 @@
   position: relative;
 }
 .wordAccordionContainer {
-  width: 100%;
   display: flex;
   flex-direction: column;
-  animation: smoothAppear 1s ease-out;
+  gap: 10px;
+  margin-top: 10px;
+  width: 100%;
+  border-radius: 2px;
+  background: var(--bg-color-2);
+  font-size: 18px;
+  animation: smoothAppear .5s ease-out;
+  border: var(--border-color);
+  padding: 10px;
 }
 .word {
   cursor: pointer;
@@ -62,7 +69,7 @@
 }
 .complexity {
   position: absolute;
-  left: -175px;
+  left: -180px;
   width: 50px;
   background-color: var(--color-1);
   color: var(--font-color-1);

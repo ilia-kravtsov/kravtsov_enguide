@@ -2,7 +2,7 @@ import s from "../styles/components/WordUpdate.module.scss";
 import {ChangeEvent, useState} from "react";
 import {WordData} from "./InputData.tsx";
 
-export type NewWordData = {word: string, transcription: string, translation: string}
+export type NewWordData = { word: string, transcription: string, translation: string }
 
 type Props = {
     wordId: string
@@ -12,37 +12,65 @@ type Props = {
 
 export const WordUpdate = ({wordData, wordId, onSaveWordClick}: Props) => {
 
-    let [updatedWord, setUpdatedWord] = useState<string>(wordData.word)
-    let [wordTranscription, setWordTranscription] = useState<string>(wordData.transcription)
-    let [wordTranslation, setWordTranslation] = useState<string>(wordData.translation.toLowerCase())
+    let [data, setData] = useState<WordData>({id: wordId, word: wordData.word, transcription: wordData.transcription, translation: wordData.translation, example: wordData.example, complexity: wordData.complexity, pos: wordData.pos, comment: wordData.comment, synonyms: wordData.synonyms})
 
     const onSaveChangedComment = () => {
         const newWordData = {
-            word: updatedWord,
-            transcription: wordTranscription,
-            translation: wordTranslation
+            id: data.id,
+            word: data.word,
+            transcription: data.transcription,
+            translation: data.translation,
+            example: data.example,
+            complexity: data.complexity,
+            pos: data.pos,
+            comment: data.comment,
+            synonyms: data.synonyms,
         }
-        console.log(newWordData)
         onSaveWordClick(wordId, false, newWordData);
     }
     const changeWord = (e: ChangeEvent<HTMLInputElement>) => {
-        setUpdatedWord(e.currentTarget.value)
+        setData({...data, word: e.currentTarget.value})
     }
     const changeTranscription = (e: ChangeEvent<HTMLInputElement>) => {
-        setWordTranscription(e.currentTarget.value)
+        setData({...data, transcription: e.currentTarget.value})
     }
-    const changeTranslation = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        setWordTranslation(e.currentTarget.value)
+    const changeTranslation = (e: ChangeEvent<HTMLInputElement>) => {
+        setData({...data, translation: e.currentTarget.value})
+    }
+    const changeExample = (e: ChangeEvent<HTMLInputElement>) => {
+        setData({...data, example: e.currentTarget.value})
+    }
+    const changeSynonyms = (e: ChangeEvent<HTMLInputElement>) => {
+        setData({...data, synonyms: e.currentTarget.value})
+    }
+    const changeComment = (e: ChangeEvent<HTMLInputElement>) => {
+        setData({...data, comment: e.currentTarget.value})
     }
 
     return (
-        <div className={s.wordMainInfo}>
-            <input value={updatedWord} onChange={changeWord} className={s.updatedWordInput}/> -
-            <input value={wordTranscription} onChange={changeTranscription} className={s.updatedWordInput}/>-
-            <textarea value={wordTranslation}
-                      onChange={changeTranslation}
-                      className={s.updatedWordTextarea}
-            ></textarea>
+        <div className={s.wordUpdatedInfo}>
+            <div className={s.wordInfoContainer}>
+                <input value={data.word}
+                       onChange={changeWord}
+                       className={s.updatedWordInput}/> -
+                <input value={data.transcription}
+                       onChange={changeTranscription}
+                       className={s.updatedWordInput}/>-
+                <input value={data.translation}
+                          onChange={changeTranslation}
+                          className={s.updatedWordInput}/>
+            </div>
+            <div className={s.wordAccordionContainer}>
+                <input value={data.example}
+                       onChange={changeExample}
+                       className={s.updatedWordInput}/>
+                <input value={data.synonyms}
+                       onChange={changeSynonyms}
+                       className={s.updatedWordInput}/>
+                <input value={data.comment}
+                       onChange={changeComment}
+                       className={s.updatedWordInput}/>
+            </div>
             <button className={s.updateButton}
                     onClick={onSaveChangedComment}>Save
             </button>

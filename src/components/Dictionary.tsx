@@ -96,16 +96,13 @@ export const Dictionary = ({}: Props) => {
                 {loadingWordsFlag ? (
                     <div className={s.loadingWords}>Loading...</div>
                 ) : (
-                    // Loop through the alphabet array to render words grouped by their starting letter
                     alphabet.map((letter) => {
-                        // Filter words that start with the current letter
                         const wordsWithLetter = sortedWords.filter(([_, wordData]) => wordData.word[0].toLowerCase() === letter);
 
-                        // Only render if there are words starting with the current letter
                         return wordsWithLetter.length > 0 && (
                             <div key={letter}>
                                 {/* Render the starting letter header */}
-                                <h2>{letter.toUpperCase()}</h2>
+                                <h2 className={s.firstLetter}>{letter.toUpperCase()}</h2>
                                 {wordsWithLetter.map(([key, wordData]) => (
                                     <li key={key} className={s.wordContainer}>
                                         {

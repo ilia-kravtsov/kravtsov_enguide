@@ -14,7 +14,7 @@ export type WordData = {
     word: string
     transcription: string
     translation: string
-    example?: string
+    example: string
     complexity: ComplexityLevels
     pos: PartsOfSpeech
     comment: string

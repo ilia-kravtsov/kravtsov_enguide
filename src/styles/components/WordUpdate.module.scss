@@ -1,8 +1,14 @@
 @import '../variables.module';
 @import '../reset.module';
 @import '../fonts.module';
-@import './Word.module';
+@import "Word.module";
 
+.wordUpdatedInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
 .updatedWordInput {
   background: var(--background);
   color: var(--color-5);
@@ -10,13 +16,4 @@
   padding: 10px;
   font-family: var(--font-family-1), sans-serif;
   font-size: 20px;
-}
-.updatedWordTextarea {
-  background: var(--background);
-  color: var(--color-5);
-  border: var(--border-color);
-  padding: 7px 7px 7px 10px;
-  font-family: var(--font-family-1), sans-serif;
-  font-size: 20px;
-  width: 50%;
 }
