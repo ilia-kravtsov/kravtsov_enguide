@@ -3,14 +3,15 @@ import {ChangeEvent, KeyboardEvent, SyntheticEvent, useState} from "react";
 import {getDatabase, ref, set, push} from "firebase/database";
 // @ts-ignore
 import { app } from "../../firebase-config.ts";
-import {v4} from 'uuid';
 import {SaveButton} from "./SaveButton.tsx";
 import Snackbar, {SnackbarCloseReason} from "@mui/material/Snackbar";
+import {ComplexityLevelsComponent} from "./ComplexityLevelsComponent.tsx";
+import {PartsOfSpeechComponent} from "./PartsOfSpeechComponent.tsx";
 
 export type ComplexityLevels = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
 export type PartsOfSpeech = 'Noun' | 'Verb' | 'Adjective' | 'Adverb' | 'Pronoun' | 'Preposition' | 'Conjunction' | 'Interjection';
 export type WordData = {
-    id: string
+    id?: string
     word: string
     transcription: string
     translation: string
@@ -24,12 +25,10 @@ export type WordData = {
 type Props = {
     setFetchActivating: ({}) => void
 }
-
+export const complexityLevels: ComplexityLevels[]  =  ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 export const partsOfSpeech: PartsOfSpeech[] = ['Noun', 'Verb', 'Adjective', 'Adverb', 'Pronoun', 'Preposition', 'Conjunction', 'Interjection'];
 
 export const InputData = ({setFetchActivating}: Props) => {
-
-    const complexityLevels: ComplexityLevels[]  =  ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
     let [data, setData] = useState<WordData>({id: '', word: '', transcription: '', translation: '', example: '', complexity: 'A1', pos: 'Noun', comment: '', synonyms: ''})
     let [notification, setNotification] = useState<string>('');
@@ -70,36 +69,25 @@ export const InputData = ({setFetchActivating}: Props) => {
         const newWordReference = push(ref(db, 'enguide/words'));
             console.log(data)
             // готовлю данные
-            const id = v4();
-            const word = data.word;
-            const transcription = data.transcription;
-            const translation = data.translation;
-            const usageExample = data.example;
-            const complexity = data.complexity;
-            const pos = data.pos;
-            const example = data.example;
-            const synonyms = data.synonyms;
-            const comment = data.comment;
+            const newWordData: WordData = {
+                word: data.word,
+                transcription: data.transcription,
+                translation: data.translation,
+                complexity: data.complexity,
+                pos: data.pos,
+                example: data.example,
+                synonyms: data.synonyms,
+                comment: data.comment
+            }
 
             // отправляю данные
-            set(newWordReference, {
-                id,
-                word,
-                transcription,
-                translation,
-                usageExample,
-                complexity,
-                pos,
-                example,
-                synonyms,
-                comment
-            }).then(() => {
+            set(newWordReference, newWordData).then(() => {
                 setNotification('a new word saved successfully');
                 setFetchActivating({});
             }).catch((error) => {
                 setNotification(`error: ${error}`);
             }).finally(() => {
-                setData({id, word: '', transcription: '', translation: '', example: '', comment: '', synonyms: '', complexity: 'A1', pos: 'Noun'})
+                setData({word: '', transcription: '', translation: '', example: '', comment: '', synonyms: '', complexity: 'A1', pos: 'Noun'})
             })
         } else {
             setNotification('fill in all the fields');
@@ -157,37 +145,39 @@ export const InputData = ({setFetchActivating}: Props) => {
                    maxLength={200}
                    onKeyDown={isKeyEnter}
                    value={data.comment}/>
-            <fieldset className={s.complexityContainer}>
-                <legend>Specify the complexity of the word :</legend>
-                {complexityLevels.map((level) => (
-                    <label key={level} className={s.complexityLabel}>
-                        <input
-                            type="radio"
-                            value={level}
-                            name="complexity"
-                            checked={data.complexity === level}
-                            onChange={handleCategoryChange}
-                        />
-                        {level}
-                    </label>
-                ))}
-            </fieldset>
-            <fieldset className={s.complexityContainer}>
-                <legend>Parts of speech:</legend>
-                {
-                    partsOfSpeech.map((pos, i) => {
-                        return <label htmlFor={pos} className={s.complexityLabel} key={pos}>
-                            <input type="radio"
-                                   id={pos}
-                                   name="parts_of_speech"
-                                   value={pos}
-                                   onChange={changingPartsOfSpeechHandler}
-                                   defaultChecked={i === 0}/>
-                            {pos}
-                        </label>
-                    })
-                }
-            </fieldset>
+            <ComplexityLevelsComponent data={data} handleCategoryChangeCB={handleCategoryChange} wordFlag={false}/>
+            <PartsOfSpeechComponent data={data} changingPartsOfSpeechHandlerCB={changingPartsOfSpeechHandler} wordFlag={false}/>
+            {/*<fieldset className={s.complexityContainer}>*/}
+            {/*    <legend>Specify the complexity of the word :</legend>*/}
+            {/*    {complexityLevels.map((level) => (*/}
+            {/*        <label key={level} className={s.complexityLabel}>*/}
+            {/*            <input*/}
+            {/*                type="radio"*/}
+            {/*                value={level}*/}
+            {/*                name="complexity"*/}
+            {/*                checked={data.complexity === level}*/}
+            {/*                onChange={handleCategoryChange}*/}
+            {/*            />*/}
+            {/*            {level}*/}
+            {/*        </label>*/}
+            {/*    ))}*/}
+            {/*</fieldset>*/}
+            {/*<fieldset className={s.complexityContainer}>*/}
+            {/*    <legend>Parts of speech:</legend>*/}
+            {/*    {*/}
+            {/*        partsOfSpeech.map((pos) => {*/}
+            {/*            return <label htmlFor={pos} className={s.complexityLabel} key={pos}>*/}
+            {/*                <input type="radio"*/}
+            {/*                       id={pos}*/}
+            {/*                       name="parts_of_speech"*/}
+            {/*                       value={pos}*/}
+            {/*                       onChange={changingPartsOfSpeechHandler}*/}
+            {/*                       defaultChecked={data.pos === pos}/>*/}
+            {/*                {pos}*/}
+            {/*            </label>*/}
+            {/*        })*/}
+            {/*    }*/}
+            {/*</fieldset>*/}
             <SaveButton onDateSaveClick={onDateSaveClick}/>
             {!!notification && <Snackbar open={!!notification}
                                          autoHideDuration={6000}

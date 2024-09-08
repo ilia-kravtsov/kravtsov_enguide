@@ -1,0 +1,21 @@
+.complexityContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.complexityLabel {
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+}
+.complexityWordContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 18px;
+}
+.complexityWordLabel {
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+}

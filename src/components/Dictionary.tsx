@@ -3,7 +3,7 @@ import s from '../styles/components/Dictionary.module.scss';
 import {get, getDatabase, ref, remove, set} from "firebase/database";
 import {app} from "../../firebase-config.ts";
 import {useEffect, useState} from "react";
-import {NewWordData, WordUpdate} from "./WordUpdate.tsx";
+import {WordUpdate} from "./WordUpdate.tsx";
 import {Word} from "./Word.tsx";
 import Snackbar from "@mui/material/Snackbar";
 
@@ -51,19 +51,29 @@ export const Dictionary = ({}: Props) => {
     const updateWordClick = (wordId: string) => {
         setUpdateWordFlag({wordId, updateFlag: true});
     }
-    const saveWordClick = async (wordId: string, updateFlag: boolean, newWordData: NewWordData) => {
+    const saveWordClick = async (wordId: string, updateFlag: boolean, newWordData: WordData) => {
         setLoadingWordsFlag(true)
         setUpdateWordFlag({wordId, updateFlag});
+
         const db = getDatabase(app);
-        const dbReference = ref(db, 'enguide/words/' + wordId);
-        set(dbReference, {
+        const wordRef = ref(db, "enguide/words/" + wordId);
+
+        const newWordServerData: WordData = {
             word: newWordData.word,
             translation: newWordData.translation,
             transcription: newWordData.transcription,
-        }).then(() => {
+            example: newWordData.example,
+            complexity: newWordData.complexity,
+            comment: newWordData.comment,
+            synonyms: newWordData.synonyms,
+            pos: newWordData.pos,
+        }
+
+        set(wordRef, newWordServerData).then(() => {
             setNotification('updated successfully')
+            setFetchActivating({})
         }).catch((error) => {
-            alert(error.message)
+            setNotification(`${error.message}`)
         }).finally(() => {
 
         })

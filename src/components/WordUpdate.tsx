@@ -1,13 +1,13 @@
 import s from "../styles/components/WordUpdate.module.scss";
 import {ChangeEvent, useState} from "react";
-import {WordData} from "./InputData.tsx";
-
-export type NewWordData = { word: string, transcription: string, translation: string }
+import {ComplexityLevels, complexityLevels, PartsOfSpeech, partsOfSpeech, WordData} from "./InputData.tsx";
+import {PartsOfSpeechComponent} from "./PartsOfSpeechComponent.tsx";
+import {ComplexityLevelsComponent} from "./ComplexityLevelsComponent.tsx";
 
 type Props = {
     wordId: string
     wordData: WordData
-    onSaveWordClick: (wordId: string, updateFlag: boolean, newWordData: NewWordData) => void
+    onSaveWordClick: (wordId: string, updateFlag: boolean, newWordData: WordData) => void
 }
 
 export const WordUpdate = ({wordData, wordId, onSaveWordClick}: Props) => {
@@ -15,7 +15,7 @@ export const WordUpdate = ({wordData, wordId, onSaveWordClick}: Props) => {
     let [data, setData] = useState<WordData>({id: wordId, word: wordData.word, transcription: wordData.transcription, translation: wordData.translation, example: wordData.example, complexity: wordData.complexity, pos: wordData.pos, comment: wordData.comment, synonyms: wordData.synonyms})
 
     const onSaveChangedComment = () => {
-        const newWordData = {
+        const newWordData: WordData = {
             id: data.id,
             word: data.word,
             transcription: data.transcription,
@@ -46,6 +46,18 @@ export const WordUpdate = ({wordData, wordId, onSaveWordClick}: Props) => {
     const changeComment = (e: ChangeEvent<HTMLInputElement>) => {
         setData({...data, comment: e.currentTarget.value})
     }
+    const handleCategoryChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value
+        if (complexityLevels.some(level => level === value)) {
+            setData({ ...data, complexity: value as ComplexityLevels });
+        }
+    }
+    const changingPartsOfSpeechHandlerCB = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value
+        if (partsOfSpeech.some(level => level === value)) {
+            setData({ ...data, pos: value as PartsOfSpeech });
+        }
+    }
 
     return (
         <div className={s.wordUpdatedInfo}>
@@ -71,6 +83,39 @@ export const WordUpdate = ({wordData, wordId, onSaveWordClick}: Props) => {
                        onChange={changeComment}
                        className={s.updatedWordInput}/>
             </div>
+            {/*<fieldset className={s.complexityContainer}>*/}
+            {/*    <legend>Specify the complexity of the word :</legend>*/}
+            {/*    {complexityLevels.map((level) => (*/}
+            {/*        <label key={level} className={s.complexityLabel}>*/}
+            {/*            <input*/}
+            {/*                type="radio"*/}
+            {/*                value={level}*/}
+            {/*                name="complexity"*/}
+            {/*                checked={data.complexity === level}*/}
+            {/*                onChange={handleCategoryChange}*/}
+            {/*            />*/}
+            {/*            {level}*/}
+            {/*        </label>*/}
+            {/*    ))}*/}
+            {/*</fieldset>*/}
+            <ComplexityLevelsComponent data={data} handleCategoryChangeCB={handleCategoryChange} wordFlag={true}/>
+            <PartsOfSpeechComponent data={data} changingPartsOfSpeechHandlerCB={changingPartsOfSpeechHandlerCB} wordFlag={true}/>
+            {/*<fieldset className={s.complexityContainer}>*/}
+            {/*    <legend>Parts of speech:</legend>*/}
+            {/*    {*/}
+            {/*        partsOfSpeech.map((pos) => {*/}
+            {/*            return <label htmlFor={pos} className={s.complexityLabel} key={pos}>*/}
+            {/*                <input type="radio"*/}
+            {/*                       id={pos}*/}
+            {/*                       name="parts_of_speech"*/}
+            {/*                       value={pos}*/}
+            {/*                       onChange={changingPartsOfSpeechHandler}*/}
+            {/*                       defaultChecked={data.pos === pos}/>*/}
+            {/*                {pos}*/}
+            {/*            </label>*/}
+            {/*        })*/}
+            {/*    }*/}
+            {/*</fieldset>*/}
             <button className={s.updateButton}
                     onClick={onSaveChangedComment}>Save
             </button>
