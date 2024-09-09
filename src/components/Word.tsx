@@ -1,5 +1,5 @@
 import s from "../styles/components/Word.module.scss";
-import {WordData} from "./InputData.tsx";
+import {WordData} from "./InputWordData.tsx";
 import {useState} from "react";
 
 type Props = {

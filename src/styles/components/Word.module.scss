@@ -77,6 +77,10 @@
   padding: 5px;
   border-radius: 2px;
 }
+.complexityExpression {
+  @extend .complexity;
+  left: -80px;
+}
 @keyframes smoothAppear {
   0% {
     height: 0;

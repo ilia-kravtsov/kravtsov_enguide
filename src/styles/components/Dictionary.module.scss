@@ -8,6 +8,7 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  position: relative;
 }
 .loadingWords {
   color: var(--font-color-1);
@@ -22,6 +23,11 @@
 .wordMainInfo {
   display: flex;
   gap: 10px;
+}
+.wordsCounter {
+  position: absolute;
+  top: 60px;
+  left: 140px;
 }
 
 

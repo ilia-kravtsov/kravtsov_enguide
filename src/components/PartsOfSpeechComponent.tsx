@@ -1,5 +1,5 @@
 import s from "../styles/components/PartsOfSpeech.module.scss";
-import {partsOfSpeech, WordData} from "./InputData.tsx";
+import {partsOfSpeech, WordData} from "./InputWordData.tsx";
 import {ChangeEvent} from "react";
 
 type Props = {

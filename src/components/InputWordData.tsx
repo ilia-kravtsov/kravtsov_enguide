@@ -7,11 +7,11 @@ import {SaveButton} from "./SaveButton.tsx";
 import Snackbar, {SnackbarCloseReason} from "@mui/material/Snackbar";
 import {ComplexityLevelsComponent} from "./ComplexityLevelsComponent.tsx";
 import {PartsOfSpeechComponent} from "./PartsOfSpeechComponent.tsx";
+import {MemorizationLevel} from "./MemorizationLevel.tsx";
 
 export type ComplexityLevels = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
 export type PartsOfSpeech = 'Noun' | 'Verb' | 'Adjective' | 'Adverb' | 'Pronoun' | 'Preposition' | 'Conjunction' | 'Interjection';
 export type WordData = {
-    id?: string
     word: string
     transcription: string
     translation: string
@@ -20,17 +20,19 @@ export type WordData = {
     pos: PartsOfSpeech
     comment: string
     synonyms: string
+    memorizationLevel: Memorization
 };
-
+export type Memorization = 'active memory' | 'passive memory' | 'unfamiliar'
 type Props = {
     setFetchActivating: ({}) => void
 }
 export const complexityLevels: ComplexityLevels[]  =  ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 export const partsOfSpeech: PartsOfSpeech[] = ['Noun', 'Verb', 'Adjective', 'Adverb', 'Pronoun', 'Preposition', 'Conjunction', 'Interjection'];
+export const memorizationLevels: Memorization[] = ['unfamiliar', 'passive memory', 'active memory'];
 
-export const InputData = ({setFetchActivating}: Props) => {
+export const InputWordData = ({setFetchActivating}: Props) => {
 
-    let [data, setData] = useState<WordData>({id: '', word: '', transcription: '', translation: '', example: '', complexity: 'A1', pos: 'Noun', comment: '', synonyms: ''})
+    let [data, setData] = useState<WordData>({word: '', transcription: '', translation: '', example: '', complexity: 'A1', pos: 'Noun', comment: '', synonyms: '', memorizationLevel: 'unfamiliar'})
     let [notification, setNotification] = useState<string>('');
 
     const WordEntering = (e: ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +59,12 @@ export const InputData = ({setFetchActivating}: Props) => {
             setData({ ...data, complexity: value as ComplexityLevels });
         }
     }
+    const handleMemoryLevelChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value
+        if (memorizationLevels.some(level => level === value)) {
+            setData({ ...data, memorizationLevel: value as Memorization });
+        }
+    }
     const changingPartsOfSpeechHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value
         if (partsOfSpeech.some(level => level === value)) {
@@ -77,7 +85,8 @@ export const InputData = ({setFetchActivating}: Props) => {
                 pos: data.pos,
                 example: data.example,
                 synonyms: data.synonyms,
-                comment: data.comment
+                comment: data.comment,
+                memorizationLevel: data.memorizationLevel
             }
 
             // отправляю данные
@@ -87,7 +96,7 @@ export const InputData = ({setFetchActivating}: Props) => {
             }).catch((error) => {
                 setNotification(`error: ${error}`);
             }).finally(() => {
-                setData({word: '', transcription: '', translation: '', example: '', comment: '', synonyms: '', complexity: 'A1', pos: 'Noun'})
+                setData({word: '', transcription: '', translation: '', example: '', comment: '', synonyms: '', complexity: 'A1', pos: 'Noun', memorizationLevel: 'unfamiliar'})
             })
         } else {
             setNotification('fill in all the fields');
@@ -145,39 +154,10 @@ export const InputData = ({setFetchActivating}: Props) => {
                    maxLength={200}
                    onKeyDown={isKeyEnter}
                    value={data.comment}/>
-            <ComplexityLevelsComponent data={data} handleCategoryChangeCB={handleCategoryChange} wordFlag={false}/>
-            <PartsOfSpeechComponent data={data} changingPartsOfSpeechHandlerCB={changingPartsOfSpeechHandler} wordFlag={false}/>
-            {/*<fieldset className={s.complexityContainer}>*/}
-            {/*    <legend>Specify the complexity of the word :</legend>*/}
-            {/*    {complexityLevels.map((level) => (*/}
-            {/*        <label key={level} className={s.complexityLabel}>*/}
-            {/*            <input*/}
-            {/*                type="radio"*/}
-            {/*                value={level}*/}
-            {/*                name="complexity"*/}
-            {/*                checked={data.complexity === level}*/}
-            {/*                onChange={handleCategoryChange}*/}
-            {/*            />*/}
-            {/*            {level}*/}
-            {/*        </label>*/}
-            {/*    ))}*/}
-            {/*</fieldset>*/}
-            {/*<fieldset className={s.complexityContainer}>*/}
-            {/*    <legend>Parts of speech:</legend>*/}
-            {/*    {*/}
-            {/*        partsOfSpeech.map((pos) => {*/}
-            {/*            return <label htmlFor={pos} className={s.complexityLabel} key={pos}>*/}
-            {/*                <input type="radio"*/}
-            {/*                       id={pos}*/}
-            {/*                       name="parts_of_speech"*/}
-            {/*                       value={pos}*/}
-            {/*                       onChange={changingPartsOfSpeechHandler}*/}
-            {/*                       defaultChecked={data.pos === pos}/>*/}
-            {/*                {pos}*/}
-            {/*            </label>*/}
-            {/*        })*/}
-            {/*    }*/}
-            {/*</fieldset>*/}
+            <MemorizationLevel defaultChecked={data.memorizationLevel} handleMemoryLevelChangeCB={handleMemoryLevelChange}/>
+            <ComplexityLevelsComponent data={data} handleCategoryChangeCB={handleCategoryChange} reduceFlag={false}/>
+            <PartsOfSpeechComponent data={data} changingPartsOfSpeechHandlerCB={changingPartsOfSpeechHandler}
+                                    wordFlag={false}/>
             <SaveButton onDateSaveClick={onDateSaveClick}/>
             {!!notification && <Snackbar open={!!notification}
                                          autoHideDuration={6000}

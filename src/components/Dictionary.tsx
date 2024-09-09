@@ -1,4 +1,4 @@
-import {InputData, WordData} from "./InputData.tsx";
+import {InputWordData, WordData} from "./InputWordData.tsx";
 import s from '../styles/components/Dictionary.module.scss';
 import {get, getDatabase, ref, remove, set} from "firebase/database";
 import {app} from "../../firebase-config.ts";
@@ -18,7 +18,7 @@ type Props = {}
 type Alphabet = 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i' | 'j' | 'k' | 'l' | 'm' |
     'n' | 'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' | 'v' | 'w' | 'x' | 'y' | 'z';
 
-const alphabet: Alphabet[] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+export const alphabet: Alphabet[] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
 export const Dictionary = ({}: Props) => {
@@ -66,6 +66,7 @@ export const Dictionary = ({}: Props) => {
             complexity: newWordData.complexity,
             comment: newWordData.comment,
             synonyms: newWordData.synonyms,
+            memorizationLevel: newWordData.memorizationLevel,
             pos: newWordData.pos,
         }
 
@@ -96,11 +97,12 @@ export const Dictionary = ({}: Props) => {
     const sortedWords = Object.entries(data).sort(([, wordDataA], [, wordDataB]) => {
         return wordDataA.word.localeCompare(wordDataB.word);
     });
-
+    console.log(sortedWords)
     return (
         <div className={s.container}>
+            <div className={s.wordsCounter}>{sortedWords.length}</div>
             <h2>Enter your new word</h2>
-            <InputData setFetchActivating={setFetchActivating}/>
+            <InputWordData setFetchActivating={setFetchActivating}/>
             <h2>Dictionary</h2>
             <ul>
                 {loadingWordsFlag ? (
@@ -132,6 +134,7 @@ export const Dictionary = ({}: Props) => {
                     })
                 )}
             </ul>
+            {!loadingWordsFlag && sortedWords.length === 0 && <div className={s.loading}>Enter your first word</div>}
             {!!notification && <Snackbar open={!!notification}
                                          autoHideDuration={6000}
                                          onClose={notificationClose}
@@ -163,7 +166,7 @@ export const Dictionary = ({}: Props) => {
 
                  <div className={s.container}>
             <h2>Enter your new word</h2>
-            <InputData setDataLoadFlag={setDataLoadFlag} flag={loadingWordsFlag}/>
+            <InputWordData setDataLoadFlag={setDataLoadFlag} flag={loadingWordsFlag}/>
             <h2>Dictionary</h2>
             <ul>
                 {loadingWordsFlag

@@ -1,0 +1,44 @@
+.memoryLevelContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.memoryLevelLabel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.memoryLevelLabel:hover {
+  cursor: pointer;
+}
+.activeMemory,
+.passiveMemory {
+  position: relative;
+  display: inline-block;
+}
+
+.activeMemory::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 100%;
+  height: 10px;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="10" viewBox="0 0 100 10"><path d="M0 5 Q 25 0, 50 5 T 100 5" fill="transparent" stroke="green" stroke-width="2"/></svg>') repeat-x;
+  animation: waveAnimation 3.5s infinite alternate linear;
+}
+
+.passiveMemory::after {
+  @extend .activeMemory;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="10" viewBox="0 0 100 10"><path d="M0 5 Q 25 0, 50 5 T 100 5" fill="transparent" stroke="dodgerblue" stroke-width="2"/></svg>') repeat-x;
+  animation-delay: 1.5s; /* Задержка для синей линии */
+}
+
+@keyframes waveAnimation {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 60% 0;
+  }
+}

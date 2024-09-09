@@ -1,6 +1,6 @@
 import s from "../styles/components/WordUpdate.module.scss";
 import {ChangeEvent, useState} from "react";
-import {ComplexityLevels, complexityLevels, PartsOfSpeech, partsOfSpeech, WordData} from "./InputData.tsx";
+import {ComplexityLevels, complexityLevels, PartsOfSpeech, partsOfSpeech, WordData} from "./InputWordData.tsx";
 import {PartsOfSpeechComponent} from "./PartsOfSpeechComponent.tsx";
 import {ComplexityLevelsComponent} from "./ComplexityLevelsComponent.tsx";
 
@@ -12,11 +12,10 @@ type Props = {
 
 export const WordUpdate = ({wordData, wordId, onSaveWordClick}: Props) => {
 
-    let [data, setData] = useState<WordData>({id: wordId, word: wordData.word, transcription: wordData.transcription, translation: wordData.translation, example: wordData.example, complexity: wordData.complexity, pos: wordData.pos, comment: wordData.comment, synonyms: wordData.synonyms})
+    let [data, setData] = useState<WordData>({word: wordData.word, transcription: wordData.transcription, translation: wordData.translation, example: wordData.example, complexity: wordData.complexity, pos: wordData.pos, comment: wordData.comment, synonyms: wordData.synonyms})
 
     const onSaveChangedComment = () => {
         const newWordData: WordData = {
-            id: data.id,
             word: data.word,
             transcription: data.transcription,
             translation: data.translation,
@@ -83,39 +82,8 @@ export const WordUpdate = ({wordData, wordId, onSaveWordClick}: Props) => {
                        onChange={changeComment}
                        className={s.updatedWordInput}/>
             </div>
-            {/*<fieldset className={s.complexityContainer}>*/}
-            {/*    <legend>Specify the complexity of the word :</legend>*/}
-            {/*    {complexityLevels.map((level) => (*/}
-            {/*        <label key={level} className={s.complexityLabel}>*/}
-            {/*            <input*/}
-            {/*                type="radio"*/}
-            {/*                value={level}*/}
-            {/*                name="complexity"*/}
-            {/*                checked={data.complexity === level}*/}
-            {/*                onChange={handleCategoryChange}*/}
-            {/*            />*/}
-            {/*            {level}*/}
-            {/*        </label>*/}
-            {/*    ))}*/}
-            {/*</fieldset>*/}
-            <ComplexityLevelsComponent data={data} handleCategoryChangeCB={handleCategoryChange} wordFlag={true}/>
+            <ComplexityLevelsComponent data={data} handleCategoryChangeCB={handleCategoryChange} reduceFlag={true}/>
             <PartsOfSpeechComponent data={data} changingPartsOfSpeechHandlerCB={changingPartsOfSpeechHandlerCB} wordFlag={true}/>
-            {/*<fieldset className={s.complexityContainer}>*/}
-            {/*    <legend>Parts of speech:</legend>*/}
-            {/*    {*/}
-            {/*        partsOfSpeech.map((pos) => {*/}
-            {/*            return <label htmlFor={pos} className={s.complexityLabel} key={pos}>*/}
-            {/*                <input type="radio"*/}
-            {/*                       id={pos}*/}
-            {/*                       name="parts_of_speech"*/}
-            {/*                       value={pos}*/}
-            {/*                       onChange={changingPartsOfSpeechHandler}*/}
-            {/*                       defaultChecked={data.pos === pos}/>*/}
-            {/*                {pos}*/}
-            {/*            </label>*/}
-            {/*        })*/}
-            {/*    }*/}
-            {/*</fieldset>*/}
             <button className={s.updateButton}
                     onClick={onSaveChangedComment}>Save
             </button>
@@ -123,59 +91,3 @@ export const WordUpdate = ({wordData, wordId, onSaveWordClick}: Props) => {
     );
 };
 
-/*
-            <div className={s.updatePosContainer}>
-                {pos.map((part, index) => (
-                    <div key={index}
-                         style={{
-                             opacity: isOpen || index === 0 ? 1 : 0,
-                             transition: 'opacity 0.5s'
-                         }} // Условные стили для видимости и эффекта
-                        // onClick={index === 0 ? handleFirstItemClick : () => {}} // Добавляем обработчик клика только на первый элемент
-                         onClick={() => handleItemClick(part)} // Handle click for every item
-                         className={s.updatePosItem}>
-                        <input
-                            id={`selectPart${index}`}
-                            type="radio"
-                            value={part} // Используем значение из массива для значения радио
-                            name="selectPart"
-                            className={s.updatePosRadio}
-                            checked={selectedPart === part} // Проверяем, выбрана ли эта опция
-                            onChange={handleChange} // Обработчик изменения
-                        />
-                       <label htmlFor={`selectPart${index}`} className={s.updatePosLabel}>{index === 0 && count > 0 ? selectedPart : part}</label>
-<label htmlFor={`selectPart${index}`} className="updatePosLabel">
-    {part}
-</label>
-</div>
-))}
-</div>
-.updatePosContainer {
-  position: absolute;
-  left: -130px;
-  display: flex;
-  flex-direction: column;
-  font-size: 16px;
-  background: var(--bg-color-1);
-  z-index: 2;
-}
-.updatePosItem {
-  overflow: hidden;
-  border: var(--border-color);
-  cursor: pointer;
-  padding: 5px;
-
-}
-.updatePosItem:not(:first-child) {
-  opacity: 0;
-}
-.updatePosItem:hover {
-  background: var(--bg-color-2);
-}
-.updatePosRadio {
-  display: none;
-}
-.updatePosLabel {
-  cursor: pointer;
-}
- */

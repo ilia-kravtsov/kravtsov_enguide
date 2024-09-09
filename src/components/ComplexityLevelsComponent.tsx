@@ -1,23 +1,25 @@
 import s from "../styles/components/ComplexityLevelsComponent.module.scss";
-import {complexityLevels, WordData} from "./InputData.tsx";
+import {complexityLevels, WordData} from "./InputWordData.tsx";
 import {ChangeEvent} from "react";
+import {Expression} from "./InputExpressionData.tsx";
 
 type Props = {
-    data: WordData
+    data: WordData | Expression
     handleCategoryChangeCB: (e: ChangeEvent<HTMLInputElement>) => void
-    wordFlag: boolean
+    reduceFlag: boolean
+    title?: string
 }
 
-export const ComplexityLevelsComponent = ({data, handleCategoryChangeCB, wordFlag}: Props) => {
+export const ComplexityLevelsComponent = ({data, handleCategoryChangeCB, reduceFlag, title}: Props) => {
 
     const handleCategoryChange = (e: ChangeEvent<HTMLInputElement>) => handleCategoryChangeCB(e)
 
 
     return (
-        <fieldset className={wordFlag ? s.complexityWordContainer : s.complexityContainer}>
-            <legend>Specify the complexity of the word :</legend>
+        <fieldset className={reduceFlag ? s.complexityWordContainer : s.complexityContainer}>
+            <legend>{title ? title : "Specify the complexity of the word:"}</legend>
             {complexityLevels.map((level) => (
-                <label key={level} className={wordFlag ? s.complexityWordLabel : s.complexityLabel}>
+                <label key={level} className={reduceFlag ? s.complexityWordLabel : s.complexityLabel}>
                     <input
                         type="radio"
                         name="complexity"
